@@ -22,7 +22,7 @@ export const Getjson= ()=>{
         <div>
             <table>
                 <tbody>
-                    {data.channel.item.map((value:testdata,key:number)=>{
+                    {data.rss.channel.item.map((value:testdata,key:number)=>{
                         return (
                             <tr key={key}>
                                 <td>{value.title}</td>
