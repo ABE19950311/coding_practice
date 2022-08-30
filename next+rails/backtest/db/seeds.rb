@@ -10,3 +10,20 @@ Issue.create([
     {name: "線"},
     {name: "面"}
 ])
+
+sample_todos = [
+    {
+        name:"test1"
+    },
+    {
+        name:"test2"
+    },
+    {
+        name:"test3"
+    }
+]
+
+sample_todos.each do |todo|
+    Todo.create(todo)
+end
+

@@ -1,36 +1,113 @@
 import useSWR from "swr";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
+import React, {useState,useEffect} from "react";
+import Link from "next";
 
-type testdata = {
-    title:string,
+type test = {
+        id:number,
+        name:string,
+        is_completed:boolean
 }
+
+console.log(process.env.ADDRESS)
 
 export const Getjson= ()=>{
-    const fetcher = (url:string)=>{
-        return  fetch(url).then((res)=>res.json());
-    }
+    const [input,setInput] = useState("");
+    const [data,setData] = useState([]);
+    const [up,setUp] = useState("");
+    const [search,setSearch] = useState("");
 
-    const {data,error} = useSWR("http://localhost:5000/issues",fetcher);
+        useEffect(()=>{
+            try {
+                axios.get(process.env.NEXT_PUBLIC_ADDRESS as string)
+                .then((res)=>{
+                    setData(res.data);
+                    return res.data;
+                })}catch(error) {
+                    console.log(error);
+                }
+        },[up])
 
+
+　　　　　const onChange = (event:{target:HTMLInputElement})=>{
+            setInput(event.target.value);     
+        }
+
+        const onSearch = (event:{target:HTMLInputElement})=>{
+            setSearch(event.target.value);
+        }
+
+        const onSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
+            event.preventDefault();
+            if(input.trim()!=="") {
+            try {
+            axios.post(process.env.NEXT_PUBLIC_ADDRESS as string,{
+                name:input,
+                is_completed:false
+            },{headers:{"Content-Type":"application/json"}})
+            .then((res)=>{
+                setUp(res.data);
+                return res.data
+            })}catch(error) {
+                console.log(error);
+            }
+        }
+        }
+
+        console.log(1+"es")
+        console.log(`1${"es"}`)
+
+        const onDelete = (id:number)=>{
+            try {
+                axios.delete(process.env.NEXT_PUBLIC_ADDRESS+`/${id}`)
+                .then((res)=>{
+                    setUp(res.data);
+                    return res.data
+                })
+            }catch(error) {
+                console.log(error);
+            }
+        }
+
+        const alldelete = ()=>{
+            try {
+                axios.delete(process.env.NEXT_PUBLIC_ALLDEL as string)
+                .then((res)=>{
+                setUp(res.data);
+                return res.data
+            })
+            }catch(error) {
+                return console.log(error);
+            }
+        }
     
-    if(error) return <div>error</div>
-    if(!data) return <div>lodaing now</div>
+        return (
+            <div>
+                <form　onSubmit={onSubmit}>
+                    <input type="text" onChange={onChange}/>
+                    <input type="submit" value="追加"/>
+                </form>
 
-    console.log(data);
-    
-    return (
-        <div>
-            <table>
-                <tbody>
-                    {data.rss.channel.item.map((value:testdata,key:number)=>{
-                        return (
-                            <tr key={key}>
-                                <td>{value.title}</td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
-        </div>
-    )
+                <label>検索：</label><input type="text" onChange={onSearch}/>
+                <button　onClick={alldelete}>全削除</button>
+            
+                {data.filter((value:test)=>{
+                    if(search===""){
+                        return value
+                    }else if(value.name.includes(search)){
+                        return value
+                    }
+                }).map((value:test,key:number)=>{
+                    return (
+                        <p key={key}>
+                            {value.name} <button onClick={()=>onDelete(value.id)}>削除</button>
+                        </p>
+                    )
+                })
+                }
+            </div>
+        )
 }
+
+
+

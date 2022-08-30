@@ -54,3 +54,5 @@ gem "faraday"
 gem "faraday_middleware"
 
 gem 'google-api-client', '~> 0.11'
+
+gem "dotenv-rails"
