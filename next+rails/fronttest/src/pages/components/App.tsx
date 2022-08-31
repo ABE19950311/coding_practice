@@ -28,6 +28,7 @@ export const Getjson= ()=>{
                 }
         },[up])
 
+        console.log(input);
 
 　　　　　const onChange = (event:{target:HTMLInputElement})=>{
             setInput(event.target.value);     
