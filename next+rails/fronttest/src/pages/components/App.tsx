@@ -81,6 +81,8 @@ export const Getjson= ()=>{
                 return console.log(error);
             }
         }
+
+        console.log(data);
     
         return (
             <div>
