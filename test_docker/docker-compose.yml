@@ -1,0 +1,35 @@
+services:
+  db:
+    image: mysql:8.0.30
+    command: --default-authentication-plugin=mysql_native_password
+    volumes: 
+      - ./db/mysql_data:/var/lib/mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD: password
+    ports: 
+    - 3326:3306
+  back:
+    tty: true
+    depends_on:
+    - db
+    build: 
+      context: ./back/
+      dockerfile: Dockerfile
+    ports:
+    - 3000:3000
+    volumes:
+    - ./back:/backapp
+    command: rails server -b 0.0.0.0
+  front:
+    build:
+      context: ./front/
+      dockerfile: Dockerfile
+    volumes:
+    - ./front/src:/frontapp
+    command: 'yarn dev'
+    ports:
+    - "8000:3000"
+
+
+
+
