@@ -1,0 +1,8 @@
+{
+    "message":"This is samaple JSON!!",
+    "data":[
+        {"name":"taro","mail":"taro@taro","age":39},
+        {"name":"hanako","mail":"hanako@hanao","age":46},
+        {"name":"sachio","mail":"saco@saco","age":987}
+    ]
+}
