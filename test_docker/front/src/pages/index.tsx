@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css'
 import {Getjson} from "./components/App"
 
 const Home: NextPage = () => {
+  console.log("test");
   return (
     <div>
     <Getjson />
