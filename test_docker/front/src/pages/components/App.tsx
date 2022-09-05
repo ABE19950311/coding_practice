@@ -35,6 +35,8 @@ export const Getjson= ()=>{
             setSearch(event.target.value);
         }
 
+        console.log(data);
+
         const onSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
             event.preventDefault();
             if(input.trim()!=="") {
