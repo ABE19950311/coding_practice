@@ -83,7 +83,7 @@ export const Getjson= ()=>{
         return (
             <div>
                 <h1>Helloooo!!!!!</h1>
-                <h3>todolist</h3>
+                <h3>todolist_example</h3>
                 <Link href="../link/linktest">
                     <a>別リンク</a>
                 </Link>
