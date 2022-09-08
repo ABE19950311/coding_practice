@@ -53,7 +53,6 @@ export const Getjson= ()=>{
         }
         }
 
-        console.log(1+"es")
         console.log(`1${"es"}`)
 
         const onDelete = (id:number)=>{
