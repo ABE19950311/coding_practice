@@ -25,7 +25,7 @@ export const Getjson= ()=>{
                 }
         },[up])
 
-        console.log(input);
+
 
 　　　　　const onChange = (event:{target:HTMLInputElement})=>{
             setInput(event.target.value);     
@@ -35,7 +35,6 @@ export const Getjson= ()=>{
             setSearch(event.target.value);
         }
 
-        console.log(data);
 
         const onSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
             event.preventDefault();
