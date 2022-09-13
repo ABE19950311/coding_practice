@@ -41,8 +41,6 @@ const Testlink = ()=>{
         }
     }
 
-    console.log(te);
-
     return (
         <div>   
             <Link href="../components/App">
