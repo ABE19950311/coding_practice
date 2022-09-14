@@ -53,6 +53,7 @@ const Testlink = ()=>{
                 <input type="radio" onClick={doClick} name="janken" value="パー"/>パー
                 <input type="submit" />
             </form>
+            <h3>自分のて{te}</h3><h3>相手のて{aite}</h3>
             <h1>結果{kekka}</h1>
         </div>
     )
