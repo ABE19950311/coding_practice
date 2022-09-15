@@ -12,8 +12,6 @@ const Testlink = ()=>{
         setAite(janke[aitenote]);
     },[])
 
-    console.log(aite);
-
     const doClick = (event:any)=>{
         setTe(event.target.value);
     }
