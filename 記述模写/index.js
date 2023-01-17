@@ -48,3 +48,49 @@
 //let obj = JSON.parse(str);
 //console.log(obj);
 //let str2 = JSON.stringify(obj);
+
+
+// let n = 1000021
+// let s = String(n)
+// let split = s.split("")
+// console.log(s.split(""))
+
+
+// for(let i=0;i<split.length;i++) {
+//     let test = split.length-1
+//             console.log(split[i])
+//             console.log(split[test-i])
+
+// }
+// for(let i=0;i<=25000;i++) {
+//     console.log(i*i)
+// }
+
+// let d = []
+// for(let i=1;i<=80000;i++) {
+//     let data = `${i}SHEEP`
+//     d.push(data)
+// }
+// let a = d.join("")
+// console.log(a.substr(77776,20))
+
+
+const fun = document.getElementById("fun")
+const byou = document.getElementById("byou")
+const miri = document.getElementById("miri")
+
+window.addEventListener("load",()=>{
+    let time = 180
+
+    const timer =setInterval(()=>{
+        if(time!==0) {
+        time--;
+        fun.textContent= Math.floor(time/60)
+        byou.textContent = time%60
+    }else if(time==0) {
+        fun.textContent = "ラーメンできたよ！！！"
+        byou.textContent = ""
+        clearInterval(timer)
+    }
+    },1000)
+})
