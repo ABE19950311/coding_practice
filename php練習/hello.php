@@ -1,6 +1,6 @@
 <?php
-// echo "hello world<br>";
-// echo "テストです<br>";
+//echo "hello world<br>";
+//echo "テストです<br>";
 
 // $price = 2000;
 // $tax = 0.08;
@@ -68,25 +68,81 @@
 //     echo "<tr><td>[$arr[0]]</td><td>[$arr[1]]</td?</tr>";
 // }
 
-$msg="";
-$result="名前を入力してください";
-if(isset($_POST["msg"])) {
-    $msg=$_POST["msg"];
-    $result="ようこそ,{$msg}さん";
-}
+// $sum=0;
+
+// if(isset($_POST["tanka"])&&isset($_POST["kosuu"])) {
+//     $sum=$_POST["tanka"]*$_POST["kosuu"];
+// }
+
+// if(isset($_POST["mail"])) {
+//     echo "情報送ります";
+// }else {
+//     echo "送りません";
+// }
+
+// switch($_POST["meal"]) {
+//     case "和食":
+//         echo "和食をだします";
+//         break;
+//     case "中華":
+//         echo "中華だします";
+//         break;
+//     case "洋食":
+//         echo "洋食だします";
+//         break;
+// }
+
+// echo $_POST["seat"];
 
 ?>
-<body>
-    <h1>helloo!!</h1>
-    <p><?php echo $result; ?></p>
-    <form method="post" action="/hello.php">
-        <input type="text" name="msg" value=<?php echo $msg; ?>>
-        <input type="submit" value="送信">
+
+<!-- <body>
+    <form action="/hello.php" method="post">
+        <input type="checkbox" name="mail">お買い得情報のメールを受け取る<br>
+        <input type="submit" value="確定">
     </form>
-</body>
+</body> -->
+
+<!-- <body>
+    <form action="/hello.php" method="post">
+        <p>食事を選択</p>
+        <input type="radio" name="meal" value="和食" checked>和食<br>
+        <input type="radio" name="meal" value="中華">中華<br>
+        <input type="radio" name="meal" value="洋食">洋食<br>
+        <input type="submit" value="確定">
+    </form>
+</body> -->
+
+<!-- <body>
+    <form action="/hello.php" method="post">
+        <p>座席選択</p>
+        <select name="seat">
+            <option value="自由席">自由席</option>
+            <option value="指定席">指定席</option>
+            <option value="グリーン席">グリーン席</option>
+        </select>
+        <input type="submit" value="確定">
+    </form>
+</body> -->
 
 
 
+<?php
+$pdo=new PDO('mysql:host=localhost;dbname=shop;charset=utf8', #PDOでデータベースに接続する。識別情報を記述。
+	'staff', 'password');
+
+$sql=$pdo->prepare("select * from product where name=?"); #prepareメソッドでSQLの実行準備、SQLがセットされたPDOstatementインスタンスを返す。?の箇所に後から値を入れられる。
+$sql->execute([$_POST["keyword"]]); #prepareで作成したSQL文の？に入れる値を配列にして渡す（複数の？に対応）
+
+foreach($sql as $row) { #->queryの記述でqueryメソッドを呼び出し、sqlを実行
+    echo "<p>$row[id]:$row[name]:$row[price]</p>"; #ダブルクォートで括れば変数値がそのまま適用される
+}
+?>
+
+<form action="/hello.php" method="post">
+    <input type="text" name="keyword">
+    <input type="submit" value="検索">
+</form>
 
 
 
