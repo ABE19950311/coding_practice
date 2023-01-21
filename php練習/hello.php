@@ -128,23 +128,102 @@
 
 
 <?php
-$pdo=new PDO('mysql:host=localhost;dbname=shop;charset=utf8', #PDOでデータベースに接続する。識別情報を記述。
-	'staff', 'password');
+// $pdo=new PDO('mysql:host=localhost;dbname=shop;charset=utf8', #PDOでデータベースに接続する。識別情報を記述。
+// 	'staff', 'password');
 
-$sql=$pdo->prepare("select * from product where name=?"); #prepareメソッドでSQLの実行準備、SQLがセットされたPDOstatementインスタンスを返す。?の箇所に後から値を入れられる。
-$sql->execute([$_POST["keyword"]]); #prepareで作成したSQL文の？に入れる値を配列にして渡す（複数の？に対応）
+// $sql=$pdo->prepare("select * from product where name like ?"); #prepareメソッドでSQLの実行準備、SQLがセットされたPDOstatementインスタンスを返す。?の箇所に後から値を入れられる。
+// $sql->execute(["%".$_POST["keyword"]."%"]); #prepareで作成したSQL文の？に入れる値を配列にして渡す（複数の？に対応）
 
-foreach($sql as $row) { #->queryの記述でqueryメソッドを呼び出し、sqlを実行
-    echo "<p>$row[id]:$row[name]:$row[price]</p>"; #ダブルクォートで括れば変数値がそのまま適用される
+// foreach($sql as $row) { #->queryの記述でqueryメソッドを呼び出し、sqlを実行
+//     echo "<p>$row[id]:$row[name]:$row[price]</p>"; #ダブルクォートで括れば変数値がそのまま適用される
+// }
+
+// $pdo=new PDO("mysql:host=localhost;dbname=shop;charset=utf8","staff","password");
+// $sql=$pdo->prepare("insert into product values(null,?,?)");
+// if(empty($_POST["name"])) {
+//     echo "商品名を入力";
+// }else if(!preg_match("/^[0-9]+$/",$_POST["price"])) {
+//     echo "価格を整数で入力";
+// }else if($sql->execute([htmlspecialchars($_POST["name"]),$_POST["price"]])) {
+//     echo "追加しました";
+// }else {
+//     echo "失敗しました";
+// }
+
+?>
+
+<!-- <form action="/hello.php" method="post">
+    商品名<input type="text" name="name">
+    価格<input type="text" name="price">
+    <input type="submit" value="追加">
+</form> -->
+
+<?php
+// $pdo=new PDO("mysql:host=localhost;dbname=shop;charset=utf8","staff","password");
+// $sql=$pdo->prepare("update product set name=?,price=? where id=?");
+
+// if(empty($_POST["name"])) {
+//     echo "商品名を入力";
+// }else if(!preg_match("/^[0-9]+$/",$_POST["price"])) {
+//     echo "価格を整数で入力";
+// }else if($sql->execute([htmlspecialchars($_POST["name"]),$_POST["price"],$_POST["id"]])) {
+//     echo "更新しました";
+// }else {
+//     echo "失敗しました";
+// }
+
+// ?>
+
+
+<!-- // <div class="th0">商品番号</div>
+// <div class="th1">商品名</div>
+// <div class="th1">価格</div> -->
+
+// <?php
+// $pdo=new PDO('mysql:host=localhost;dbname=shop;charset=utf8',
+// 	'staff', 'password');
+// foreach ($pdo->query('select * from product') as $row) {
+// 	echo '<form action="/hello.php" method="post">';
+// 	echo '<input type="hidden" name="id" value="', $row['id'], '">';
+// 	echo '<div class="td0">', $row['id'], '</div> ';
+// 	echo '<div class="td1">';
+// 	echo '<input type="text" name="name" value="', $row['name'], '">';
+// 	echo '</div> ';
+// 	echo '<div class="td1">';
+// 	echo ' <input type="text" name="price" value="', $row['price'], '">';
+// 	echo '</div> ';
+// 	echo '<div class="td2"><input type="submit" value="更新"></div>';
+// 	echo '</form>';
+// 	echo "\n";
+// }
+// ?>
+
+
+<?php
+$pdo=new PDO("mysql:host=localhost;dbname=shop;charset=utf8","staff","password");
+$sql=$pdo->prepare("delete from product where id=?");
+if($sql->execute([$_GET["id"]])) {
+    echo "削除しました";
+}else {
+    echo "失敗しました";
 }
 ?>
 
-<form action="/hello.php" method="post">
-    <input type="text" name="keyword">
-    <input type="submit" value="検索">
-</form>
-
-
-
-
-
+<table>
+<tr><th>商品番号</th><th>商品名</th><th>価格</th><th></th></tr>
+<?php
+$pdo=new PDO('mysql:host=localhost;dbname=shop;charset=utf8',
+	'staff', 'password');
+foreach ($pdo->query('select * from product') as $row) {
+	echo '<tr>';
+	echo '<td>', $row['id'], '</td>';
+	echo '<td>', $row['name'], '</td>';
+	echo '<td>', $row['price'], '</td>';
+	echo '<td>';
+	echo '<a href="/hello.php?id=', $row['id'], '">削除</a>';
+	echo '</td>';
+	echo '</tr>';
+	echo "\n";
+}
+?>
+</table>
