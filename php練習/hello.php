@@ -200,30 +200,69 @@
 
 
 <?php
-$pdo=new PDO("mysql:host=localhost;dbname=shop;charset=utf8","staff","password");
-$sql=$pdo->prepare("delete from product where id=?");
-if($sql->execute([$_GET["id"]])) {
-    echo "削除しました";
-}else {
-    echo "失敗しました";
-}
+// $pdo=new PDO("mysql:host=localhost;dbname=shop;charset=utf8","staff","password");
+// $sql=$pdo->prepare("delete from product where id=?");
+// if($sql->execute([$_GET["id"]])) {
+//     echo "削除しました";
+// }else {
+//     echo "失敗しました";
+// }
 ?>
 
-<table>
+<!-- <table>
 <tr><th>商品番号</th><th>商品名</th><th>価格</th><th></th></tr>
 <?php
-$pdo=new PDO('mysql:host=localhost;dbname=shop;charset=utf8',
-	'staff', 'password');
-foreach ($pdo->query('select * from product') as $row) {
-	echo '<tr>';
-	echo '<td>', $row['id'], '</td>';
-	echo '<td>', $row['name'], '</td>';
-	echo '<td>', $row['price'], '</td>';
-	echo '<td>';
-	echo '<a href="/hello.php?id=', $row['id'], '">削除</a>';
-	echo '</td>';
-	echo '</tr>';
-	echo "\n";
-}
+// $pdo=new PDO('mysql:host=localhost;dbname=shop;charset=utf8',
+// 	'staff', 'password');
+// foreach ($pdo->query('select * from product') as $row) {
+// 	echo '<tr>';
+// 	echo '<td>', $row['id'], '</td>';
+// 	echo '<td>', $row['name'], '</td>';
+// 	echo '<td>', $row['price'], '</td>';
+// 	echo '<td>';
+// 	echo '<a href="/hello.php?id=', $row['id'], '">削除</a>';
+// 	echo '</td>';
+// 	echo '</tr>';
+// 	echo "\n";
+// }
 ?>
-</table>
+</table> -->
+
+<?php session_start(); ?>
+<?php
+unset($_SESSION["member"]);
+$pdo = new PDO("mysql:host=localhost;dbname=backtest;charset=utf8",
+                "staff","password");
+$sql = $pdo->prepare("select * from member where username=? and password=?");
+$sql->execute([$_POST["user"],$_POST["pass"]]);
+
+foreach($sql as $row) {
+    $_SESSION["member"]=[
+        "id"=>$row["id"],
+        "username"=>$row["username"],
+        "password"=>$row["password"]
+    ];
+}
+
+if(isset($_SESSION["member"])) {
+    echo "ようこそ{$_SESSION["member"]["username"]}さん";
+}else {
+    echo "ログイン失敗";
+}
+
+if(empty($_POST["user"])||empty($_POST["pass"])) {
+    echo "ユーザ名またはパスを入力";
+}else if(isset($_POST["user"])&&isset($_POST["pass"])) {
+    echo "入力確認";
+}else {
+    echo "失敗";
+}
+
+?>
+
+
+<form action="/hello.php" method="post">
+    ユーザ入力<input type="text" name="user"><br>
+    パスワード入力<input type="password" name="pass">
+    <input type="submit" value="送信">
+</form>
