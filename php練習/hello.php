@@ -228,41 +228,63 @@
 ?>
 </table> -->
 
-<?php session_start(); ?>
 <?php
-unset($_SESSION["member"]);
-$pdo = new PDO("mysql:host=localhost;dbname=backtest;charset=utf8",
-                "staff","password");
-$sql = $pdo->prepare("select * from member where username=? and password=?");
-$sql->execute([$_POST["user"],$_POST["pass"]]);
+// unset($_SESSION["member"]);
+// $pdo = new PDO("mysql:host=localhost;dbname=backtest;charset=utf8",
+//                 "staff","password");
+// $sql = $pdo->prepare("select * from member where username=? and password=?");
+// $sql->execute([$_POST["user"],$_POST["pass"]]);
 
-foreach($sql as $row) {
-    $_SESSION["member"]=[
-        "id"=>$row["id"],
-        "username"=>$row["username"],
-        "password"=>$row["password"]
-    ];
-}
+// foreach($sql as $row) {
+//     $_SESSION["member"]=[
+//         "id"=>$row["id"],
+//         "username"=>$row["username"],
+//         "password"=>$row["password"]
+//     ];
+// }
 
-if(isset($_SESSION["member"])) {
-    echo "ようこそ{$_SESSION["member"]["username"]}さん";
-}else {
-    echo "ログイン失敗";
-}
+// if(isset($_SESSION["member"])) {
+//     echo "ようこそ{$_SESSION["member"]["username"]}さん";
+// }else {
+//     echo "ログイン失敗";
+// }
 
-if(empty($_POST["user"])||empty($_POST["pass"])) {
-    echo "ユーザ名またはパスを入力";
-}else if(isset($_POST["user"])&&isset($_POST["pass"])) {
-    echo "入力確認";
-}else {
-    echo "失敗";
-}
+// if(empty($_POST["user"])||empty($_POST["pass"])) {
+//     echo "ユーザ名またはパスを入力";
+// }else if(isset($_POST["user"])&&isset($_POST["pass"])) {
+//     echo "入力確認";
+// }else {
+//     echo "失敗";
+// }
 
 ?>
 
 
-<form action="/hello.php" method="post">
+<!-- <form action="/hello.php" method="post">
     ユーザ入力<input type="text" name="user"><br>
     パスワード入力<input type="password" name="pass">
     <input type="submit" value="送信">
-</form>
+</form> -->
+
+<?php session_start(); ?>
+<?php
+$username=$password="";
+if(isset($_SESSION["member"])) {
+    $username=$_SESSION["member"]["username"];
+    $password=$_SESSION["member"]["password"];
+    echo "$username";
+}
+
+echo '<form action="/newuser.php" method="post">';
+echo '<table>';
+echo '<tr><td>ログイン名</td><td>';
+echo '<input type="text" name="username" value="', $username, '">';
+echo '</td></tr>';
+echo '<tr><td>パスワード</td><td>';
+echo '<input type="password" name="password" value="', $password, '">';
+echo '</td></tr>';
+echo '</table>';
+echo '<input type="submit" value="確定">';
+echo '</form>';
+
+?>
