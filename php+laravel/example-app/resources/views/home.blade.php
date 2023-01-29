@@ -8,5 +8,11 @@
 </head>
 <body>
     <p>hello world!!!</p>
+    @if(Auth::check())
+        <p>{{\Auth::user()->name}}</p>
+        <p><a href="/logout">ログアウト</a></p>
+    @else
+        <p>ゲスト</p>
+        <p><a href="/login">ログイン</a><a href="/register">会員登録</a></p>
 </body>
 </html>
