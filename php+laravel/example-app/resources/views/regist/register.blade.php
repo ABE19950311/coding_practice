@@ -9,6 +9,8 @@
 <body>
     <form name="registform" action="/register" method="post" id="registform">
         {{csrf_field()}}
+        {{$name = app()->make('myName');}}
+        <p>{{$name}}</p>
         <dl>
             <dt>名前:</dt>
             <dd><input type="text" name="name" size="30">

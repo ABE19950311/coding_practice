@@ -39,3 +39,4 @@ Route::get("/logout", [App\Http\Controllers\LoginController::class,"logout"])
     ->middleware("auth")
     ->name("logout");
 
+
