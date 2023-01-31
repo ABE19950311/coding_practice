@@ -21,6 +21,12 @@ Route::get("/home", function() {
     return view("home");
 });
 
+Route::get("/testres", [App\Http\Controllers\TestresController::class,"testreq"])
+    ->middleware(("guest"));
+
+Route::post("/testres", [App\Http\Controllers\TestresController::class,"testres"])
+    ->middleware(("guest"));
+
 Route::get("/register", [App\Http\Controllers\RegisterController::class,"create"])
     ->middleware("guest")
     ->name("register");
