@@ -14,14 +14,15 @@ class AuthorTableSeeder extends Seeder
      */
     public function run()
     {
-        for($i=1;$i<=10;$i++) {
-            $author = [
-                "name"=>"著者名".$i,
-                "kana"=>"チョシャメイ".$i,
-                "created_at"=>now(),
-                "updated_at"=>now()
-            ];
-            \Illuminate\Support\Facades\DB::table("authors")->insert($author);
-        }
+      $faker = \Faker\Factory::create("ja_JP");
+      for($i=0;$i<=10;$i++) {
+        $author=[
+            "name"=>$faker->name,
+            "kana"=>$faker->kanaName,
+            "created_at"=>now(),
+            "updated_at"=>now()
+        ];
+        \Illuminate\Support\Facades\DB::table("authors")->insert($author);
+      }
     }
 }

@@ -26,14 +26,50 @@ class TestresController extends Controller {
             // $res=Response::make("テストレスポンス作成");
             // return $res;
             //return view("testres.testres");
-            $jsonres=Response::json(["status"=>"success"]);
-            return $jsonres;
+            // $jsonres=Response::json(["status"=>"success"]);
+            // return $jsonres;
+            //$authors = \App\Models\Author::all();
+            //$find = \App\Models\Author::find(11);
+            //$where = \App\Models\Author::whereName("近藤 裕太")->get();
+            //$update = \App\Models\Author::find(1)->update(["name"=>"著者UPDATE"]);
+            //$delete = \App\Models\Author::find(1);
+            // /$delete->delete();
+            //\App\Models\Author::destroy([1,2,3,4,5]);
+
+            // \App\Models\Author::create([
+            //     "name"=>"著者A",
+            //     "kana"=>"チョシャA"
+            // ]);
+
+            // $filter = $authors->filter(
+            //     function($author) {
+            //         return $author->id > 5;
+            //     }
+            // );
+            $authors = \App\Models\Author::where("id",">=",2)
+            ->orderBy("id")
+            ->get();
+
+            $author = \App\Models\Author::firstOrCreate(["name"=>"著者C","kana"=>"チョシャC"]);
+
+            foreach($authors as $author) {
+                echo $author->name;
+            }
+            //echo $authors->toJson();
+            //echo $authors->count();
+            //echo $find->name;
+
+            //if($where) {
+            //    echo $where;
+            //}else {
+            //    echo "nodata";
+            //}
         }
 
-        public function __testres(Request $request):JsonResponse {
-            $response = Response::json(["status"=>"success"]);
-            $response = response()->json(["status"=>"success"]);
-            return $response;
-        }
+        // public function __testres(Request $request):JsonResponse {
+        //     $response = Response::json(["status"=>"success"]);
+        //     $response = response()->json(["status"=>"success"]);
+        //     return $response;
+        // }
 
 }
