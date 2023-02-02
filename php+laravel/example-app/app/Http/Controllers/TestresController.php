@@ -46,15 +46,25 @@ class TestresController extends Controller {
             //         return $author->id > 5;
             //     }
             // );
-            $authors = \App\Models\Author::where("id",">=",2)
-            ->orderBy("id")
+            // $authors = \App\Models\Author::where("id",">=",2)
+            // ->orderBy("id")
+            // ->get();
+
+            // $author = \App\Models\Author::firstOrCreate(["name"=>"著者C","kana"=>"チョシャC"]);
+
+            // foreach($authors as $author) {
+            //     echo $author->name;
+            // }
+
+            $results = \Illuminate\Support\Facades\DB::table("books")
+            ->select(["bookdetails.isbn","books.name as title","authors.name as author",
+                        "bookdetails.price"])
+            ->leftJoin("bookdetails","books.id","=","book.details.book_id")
+            ->leftJoin("authors","books.author_id","=","authors.id")
+            ->where("bookdetails.publicshed_date","desc")
+            ->orderBy("bookdetails.published_date","desc")
             ->get();
 
-            $author = \App\Models\Author::firstOrCreate(["name"=>"著者C","kana"=>"チョシャC"]);
-
-            foreach($authors as $author) {
-                echo $author->name;
-            }
             //echo $authors->toJson();
             //echo $authors->count();
             //echo $find->name;
