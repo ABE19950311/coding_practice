@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,4 +46,14 @@ Route::get("/logout", [App\Http\Controllers\LoginController::class,"logout"])
     ->middleware("auth")
     ->name("logout");
 
+Route::get("/no_args",function() {
+    Artisan::call("no-args-command");
+});
+
+Route::get("/with_args",function() {
+    Artisan::call("with-args-command", [
+        "name"=>"Johann",
+        "--switch"=>true,
+    ]);
+});
 
