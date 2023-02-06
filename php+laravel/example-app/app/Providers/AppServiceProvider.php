@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Knp\Snappy\Pdf;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,9 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(Pdf::class,function() {
-            return new Pdf("/usr/bin/wkhtmltopdf");
-        });
+        //
     }
 
     /**
