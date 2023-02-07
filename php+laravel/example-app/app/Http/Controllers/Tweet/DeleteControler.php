@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Tweet;
 
 use App\Http\Controllers\Controller;
-use App\Models\Tweet;
 use Illuminate\Http\Request;
+use App\Models\Tweet;
 
-class IndexController extends Controller
+class DeleteControler extends Controller
 {
     /**
      * Handle the incoming request.
@@ -16,8 +16,11 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $tweets = Tweet::orderBy("created_at","DESC")->get();
-        return view("tweet.index")
-            ->with("tweets",$tweets);
+        $tweetid = (int) $request->route("tweetId");
+        $tweet = Tweet::where("id",$tweetid)->firstOrFail();
+        $tweet->delete();
+        return redirect()
+            ->route("tweet.index")
+            ->with("feedback.success","削除");
     }
 }
