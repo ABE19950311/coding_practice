@@ -7,6 +7,7 @@
     <title>つぶやきアプリ</title>
 </head>
 <body>
+    @auth
     <div>
     <p>投稿フォーム</p>
     <form action="{{route('tweet.create')}}" method="post">
@@ -20,6 +21,7 @@
         <button type="submit">投稿</button>
     </form>
     </div>
+    @endauth
     <div>
         @foreach($tweets as $tweet)
         <details>
