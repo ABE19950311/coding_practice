@@ -28,12 +28,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get("/index",function() {
-    return view("src.index");
-})->name("index");
+Route::get("/index",[App\Http\Controllers\IndexController::class,"index"])
+    ->name("index");
 
 Route::post("/todo/create",[App\Http\Controllers\TodoController::class,"create"])
     ->name("todo.create");
+
+Route::put("/todo/update/{todoId}",[App\Http\Controllers\UpdateController::class,"update"])
+    ->name("todo.update");
+
+Route::get("/todo/update/index/{todoId}",[App\Http\Controllers\UpdateIndexController::class,"index"])
+    ->name("todo.update.index");
+
+Route::delete("/todo/delete/{todoId}",[App\Http\Controllers\DeleteController::class,"delete"])
+    ->name("todo.delete");
+
 
 
 require __DIR__.'/auth.php';

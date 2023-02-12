@@ -18,6 +18,23 @@
     <br>
     <button type="submit">作成</button>
 </form>
+
+    <div>
+        @foreach($todos as $todo)
+        <details>
+        <summary>{{$todo->todo}}</summary>
+        {{$todo->startdate}}
+        {{$todo->enddate}}
+        作成者:{{$todo->user->name}}
+        <a href="{{route('todo.update.index',['todoId'=>$todo->id])}}">編集</a>
+        <form action="{{route('todo.delete',['todoId'=>$todo->id])}}" method="post">
+        @method("DELETE")
+        @csrf
+        <button type="submit">削除</button>
+        </form>
+        </details>
+        @endforeach
+    </div>
 </x-app-layout>
 
 </body>
