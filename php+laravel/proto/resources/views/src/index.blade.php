@@ -10,12 +10,16 @@
 
 <x-app-layout>
 <h1>ハローワールド！！</h1>
+<a href="{{route('board')}}">掲示板へ</a>
 <form action="{{route('todo.create')}}" method="post">
     @csrf
     <label>TODO:</label><input type="text" name="todo">
     <label>開始日:</label><input type="text" name="start">
     <label>終了日:</label><input type="text" name="end">
     <br>
+    @if(session("err"))
+    <p>{{session("err")}}</p>
+    @endif
     <button type="submit">作成</button>
 </form>
 

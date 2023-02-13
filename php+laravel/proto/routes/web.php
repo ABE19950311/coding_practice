@@ -43,6 +43,12 @@ Route::get("/todo/update/index/{todoId}",[App\Http\Controllers\UpdateIndexContro
 Route::delete("/todo/delete/{todoId}",[App\Http\Controllers\DeleteController::class,"delete"])
     ->name("todo.delete");
 
+Route::get("/board",[App\Http\Controllers\BoardController::class,"board"])
+    ->name("board");
+
+Route::post("/board/create",[App\Http\Controllers\BoardController::class,"create"])
+    ->name("board.create");
+
 
 
 require __DIR__.'/auth.php';

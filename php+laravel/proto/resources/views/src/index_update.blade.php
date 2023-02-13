@@ -8,6 +8,9 @@
 </head>
 <body>
     <h1>編集</h1>
+    @if(session("feedback"))
+    <p>{{session("feedback")}}</p>
+    @endif
     <a href="{{route('index')}}">戻る</a>
     <form action="{{route('todo.update',['todoId'=>$todo->id])}}" method="post">
         @method("PUT")
