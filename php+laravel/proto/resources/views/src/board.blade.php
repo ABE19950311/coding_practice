@@ -17,7 +17,7 @@
     </form>
 
     @foreach($datas as $data)
-    <p>{{$data->title}}</p>
+    <p><a href="{{route('comment',['boardId'=>$data->id])}}">{{$data->title}}</a></p>
     <p>{{$data->createdate}}</p>
     <p>{{$data->createuser}}</p>
     @endforeach

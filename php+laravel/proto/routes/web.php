@@ -49,6 +49,10 @@ Route::get("/board",[App\Http\Controllers\BoardController::class,"board"])
 Route::post("/board/create",[App\Http\Controllers\BoardController::class,"create"])
     ->name("board.create");
 
+Route::get("/comment/{boardId}",[App\Http\Controllers\CommentController::class,"comment"])
+    ->name("comment");
 
+Route::post("/comment/create/{boardId}",[App\Http\Controllers\CommentController::class,"create"])
+    ->name("comment.create");
 
 require __DIR__.'/auth.php';

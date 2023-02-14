@@ -11,6 +11,7 @@ class Board extends Model
 
     protected $fillable=["user_id","title","createdate","createuser"];
     public function users() {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)
+        ->withPivot('comment');
     }
 }
