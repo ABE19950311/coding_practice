@@ -47,6 +47,7 @@
 
     <div>
         @foreach($todos as $todo)
+        @if(\Illuminate\Support\Facades\Auth::id()===$todo->user_id)
         <details>
         <summary>{{$todo->todo}}</summary>
         {{$todo->startdate}}
@@ -59,6 +60,7 @@
         <button type="submit">削除</button>
         </form>
         </details>
+        @endif
         @endforeach
     </div>
 

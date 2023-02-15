@@ -28,31 +28,37 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get("/index",[App\Http\Controllers\IndexController::class,"index"])
-    ->name("index");
+Route::middleware("auth")->group(function () {
+    Route::get("/index",[App\Http\Controllers\IndexController::class,"index"])
+        ->name("index");
 
-Route::post("/todo/create",[App\Http\Controllers\TodoController::class,"create"])
-    ->name("todo.create");
+    Route::post("/todo/create",[App\Http\Controllers\TodoController::class,"create"])
+        ->name("todo.create");
 
-Route::put("/todo/update/{todoId}",[App\Http\Controllers\UpdateController::class,"update"])
-    ->name("todo.update");
+    Route::put("/todo/update/{todoId}",[App\Http\Controllers\UpdateController::class,"update"])
+        ->name("todo.update");
 
-Route::get("/todo/update/index/{todoId}",[App\Http\Controllers\UpdateIndexController::class,"index"])
-    ->name("todo.update.index");
+    Route::get("/todo/update/index/{todoId}",[App\Http\Controllers\UpdateIndexController::class,"index"])
+        ->name("todo.update.index");
 
-Route::delete("/todo/delete/{todoId}",[App\Http\Controllers\DeleteController::class,"delete"])
-    ->name("todo.delete");
+    Route::delete("/todo/delete/{todoId}",[App\Http\Controllers\DeleteController::class,"delete"])
+        ->name("todo.delete");
 
-Route::get("/board",[App\Http\Controllers\BoardController::class,"board"])
-    ->name("board");
+    Route::get("/board",[App\Http\Controllers\BoardController::class,"board"])
+        ->name("board");
 
-Route::post("/board/create",[App\Http\Controllers\BoardController::class,"create"])
-    ->name("board.create");
+    Route::post("/board/create",[App\Http\Controllers\BoardController::class,"create"])
+        ->name("board.create");
 
-Route::get("/comment/{boardId}",[App\Http\Controllers\CommentController::class,"comment"])
-    ->name("comment");
+    Route::get("/comment/{boardId}",[App\Http\Controllers\CommentController::class,"comment"])
+        ->name("comment");
 
-Route::post("/comment/create/{boardId}",[App\Http\Controllers\CommentController::class,"create"])
-    ->name("comment.create");
+    Route::post("/comment/create/{boardId}",[App\Http\Controllers\CommentController::class,"create"])
+        ->name("comment.create");
+});
+
+
+
+
 
 require __DIR__.'/auth.php';

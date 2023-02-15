@@ -8,6 +8,7 @@
 </head>
 <body>
     <h1>掲示板を作成する</h1>
+    <a href="{{route('index')}}">戻る</a>
     <form action="{{route('board.create')}}" method="post">
         @csrf
         <label>タイトル:</label><input type="text" name="title"><br>
@@ -20,6 +21,7 @@
     <p><a href="{{route('comment',['boardId'=>$data->id])}}">{{$data->title}}</a></p>
     <p>{{$data->createdate}}</p>
     <p>{{$data->createuser}}</p>
+    <p>{{$data->user->name}}</p>
     @endforeach
 </body>
 </html>

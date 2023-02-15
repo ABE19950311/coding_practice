@@ -14,4 +14,8 @@ class Board extends Model
         return $this->belongsToMany(User::class)
         ->withPivot('comment');
     }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }
