@@ -3,6 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Mail\Mailer;
+use App\Mail\TestMail;
+use App\Models\User;
 
 class SampleCommand extends Command
 {
@@ -25,9 +28,10 @@ class SampleCommand extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(Mailer $mailer)
     {
-        echo "テストコマンド";
+            $mailer->to("test@example.com")
+            ->send(new TestMail());
         return 0;
     }
 }

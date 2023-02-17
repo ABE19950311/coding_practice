@@ -14,6 +14,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use App\Mail\NewUserIntroduction;
 use Illuminate\Contracts\Mail\Mailer;
+use App\Mail\TestMail;
 
 class RegisteredUserController extends Controller
 {
@@ -49,10 +50,10 @@ class RegisteredUserController extends Controller
         Auth::login($newUser);
 
         //メール送信処理
-        $alluser = User::get();
+        $alluser=User::get();
         foreach($alluser as $user) {
             $mailer->to($user->email)
-                ->send(new NewUserIntroduction($user,$newUser));
+            ->send(new TestMail($user,$newUser));
         }
 
         return redirect(RouteServiceProvider::HOME);
