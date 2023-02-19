@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Exceptions\PreconditionException;
 use PHPUnit\Framework\TestCase;
 use App\Service\CalculatePointService;
 
@@ -12,15 +13,29 @@ class CalculatePointServiceTest extends TestCase
      *
      * @return void
      */
-    public function test_calcPoint_購入金額が0ならポイント0()
-    {
-        $result = CalculatePointService::calcPoint(0);
-        $this->assertSame(0,$result);
+
+    public function dataProvider_for_calcPoint() {
+        return [
+            "購入金額０なら０"=>[0,0],
+            "購入金額９９９なら０"=>[0,999],
+            "購入金額１０００なら１０"=>[10,1000]
+        ];
     }
 
-    public function test_calcPoint_購入金額が1000ならポイント10()
+    /**
+     * @dataProvider dataProvider_for_calcPoint
+     */
+
+    public function test_calcPoint(int $a,int $b)
     {
-        $result = CalculatePointService::calcPoint(1000);
-        $this->assertSame(10,$result);
+        $result = CalculatePointService::calcPoint($b);
+        $this->assertSame($a,$result);
     }
+
+    public function test_calcPoint_負の数なら例外をスロー() {
+        $this->expectException(PreconditionException::class);
+        $this->expectExceptionMessage("購入金額が負の数");
+        CalculatePointService::calcPoint(-1);
+    }
+
 }
