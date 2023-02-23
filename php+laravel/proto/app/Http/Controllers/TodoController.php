@@ -22,4 +22,8 @@ class TodoController extends Controller
                         ->with("err","エラー");
         }
     }
+
+    public function fetch() {
+        return Todo::latest()->get();
+    }
 }
