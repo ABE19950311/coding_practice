@@ -15,12 +15,11 @@ class TodoTest extends TestCase
      * @runInSeparateProcess
      * @return void
      */
-    public function test_check_todo()
+    public function test_check_index()
     {
-        $this->artisan("db:seed",["--class"=>"TodoSeeder"]);
-        $todo = new TodoController;
-        $response = $todo->fetch();
-        $this->withoutExceptionHandling();
-        $response->assertEquals($response,3);
+        $res = $this->get("/");
+        $res->assertStatus(200);
+        $res->assertSee("Documentation");
     }
+
 }
