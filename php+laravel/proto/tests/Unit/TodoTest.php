@@ -29,6 +29,15 @@ class TodoTest extends TestCase
         $this->actingAs($user);
         $res = $this->get("/board");
         $res->assertStatus(200);
+        $this->assertSame("hoge","hoge");
+        $this->assertSame(0,0);
+        $this->assertSame(true,true);
+        $this->assertCount(2,[1,2]);
+        $arr1=[0=>"foo",1=>"bar"];
+        $arr2=[0=>"foo",1=>"bar"];
+        $arr3=[0=>"hoge",1=>"bar"];
+        $this->assertSame($arr1,$arr2);
+        $this->assertNotEquals($arr1,$arr3);
     }
 
 }
