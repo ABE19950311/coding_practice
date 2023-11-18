@@ -1,35 +1,35 @@
-let todos = {
-    todoValue
-}
-
 window.addEventListener("load",()=>{
     main()
 })
 
 function main() {
-    
+    const url = "http://localhost:3000/getTodo"
+    requestToServer(url,"POST",null,(data)=>{
+
+    })
 }
 
 function setTodo() {
-    const value = document.getElementById("todo").value
-    requestTodo(value)
+    const url = "http://localhost:3000/setTodo"
+    const body = {
+        "todovalue":document.getElementById("todo").value
+    }
+    requestToServer(url,"POST",body,()=>{})
 }
 
-function requestTodo(todo) {
-    let url = "http://localhost:3000/setTodo"
-    let option = {
-        method:"POST",
-        headers:{
+function requestToServer(url,method,body,callback) {
+    const option = {
+        method: method,
+        headers: {
             "Content-Type":"application/json"
         },
-        body:JSON.stringify({
-            "todovalue":todo
-        })
+        body:JSON.stringify(body)
     }
     fetch(url,option)
-        .then(res => res.json())
+        .then(response => response.json())
         .then(data => {
             console.log(data)
+            callback(data)
         })
         .catch(e => {
             console.error(e)

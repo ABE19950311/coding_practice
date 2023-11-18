@@ -4,6 +4,9 @@ const mongoClient = require("mongodb").MongoClient;
 
 let server
 
+let todos = []
+module.exports = todos
+
 const RESPONSE_HEADER = {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*"
@@ -16,16 +19,90 @@ const MONGO_DB_COLLECTIONS = {
 }
 
 function router(url,request,response) {
-    console.log(url)
     switch(url) {
         case "/":
             getPage(url,request,response)
+            return;
+        case "/index.css":
+            getPage(url,request,response)
+            return;
+        case "/index.js":
+            getPage(url,request,response)
+            return;
+        case "/setTodo":
+            setTodo(url,request,response)
+            return;
+        case "/getTodo":
+            getTodo(url,request,response)
             return;
     }
 }
 
 function getPage(url,request,response) {
-    
+    if(url=="/") {
+        url = "/dest/index.html"
+    }
+    const currentDir = process.cwd();
+    const path = url.split(".").pop()
+    let header = {
+        html:"text/html",
+        css:"text/css",
+        js:"text/javascript"
+    }
+    fs.readFile(`${currentDir}${url}`,"utf-8",(error,data)=>{
+        if(!error) {
+            response.writeHead(200, { "Content-Type": header[path]});
+            response.write(data)
+            response.end();
+        }
+    })
+}
+
+async function setTodo(url,request,response) {
+    await dbInsert(MONGO_DB_COLLECTIONS.TODO,{
+        todo:request.todovalue
+    })
+    const responseBody = {
+        applicationStatusCode: "Success",
+        applicationMessage: "Success"
+    }
+    doResponse(response,200,RESPONSE_HEADER,responseBody)
+}
+
+async function getTodo(url,request,response) {
+    const res = await dbGet(MONGO_DB_COLLECTIONS.TODO)
+    const responseBody = {
+        applicationStatusCode: "Success",
+        applicationMessage: "Success",
+        todos:res
+    }
+    todos = res
+    doResponse(response,200,RESPONSE_HEADER,responseBody)
+}
+
+async function dbInsert(collection,obj) {
+    const res = await db.collection(collection).insertOne(obj)
+    return res
+}
+
+async function dbGet(collection) {
+    const res = await db.collection(collection).find().toArray()
+    return res
+}
+
+async function dbUpdate(collection) {
+
+}
+
+async function dbDelete(collection,key) {
+    const res = await db.collection(collection).deleteOne(key)
+    return res
+}
+
+function doResponse(response,statuscode,responseHeader,responseBody) {
+    console.log(responseBody)
+    response.writeHead(statuscode,responseHeader)
+    response.end(JSON.stringify(responseBody)+"\n")
 }
 
 async function main() {
