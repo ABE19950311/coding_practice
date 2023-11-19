@@ -3,13 +3,12 @@ const rename = require("gulp-rename");
 const ejs = require("gulp-ejs");
 const replace = require("gulp-replace");
 const plumber = require('gulp-plumber');
-const data = require("./server")
 
 // EJSコンパイル
 const EJScompile = (done) => {
     gulp.src(["index.ejs"])
       .pipe(plumber())
-      .pipe(ejs({todos:data}, {}, { ext: '.html' }))
+      .pipe(ejs({}, {}, { ext: '.html' }))
       .pipe(rename({ extname: '.html' }))
       .pipe(replace(/^[ \t]*\n/gmi, ''))
       .pipe(gulp.dest("./dest/"));

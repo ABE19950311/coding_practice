@@ -4,9 +4,6 @@ const mongoClient = require("mongodb").MongoClient;
 
 let server
 
-let todos = []
-module.exports = todos
-
 const RESPONSE_HEADER = {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*"
@@ -34,6 +31,12 @@ function router(url,request,response) {
             return;
         case "/getTodo":
             getTodo(url,request,response)
+            return;
+        case "/deleteTodo":
+            deleteTodo(url,request,response)
+            return;
+        case "/updateTodo":
+            updateTodo(url,request,response)
             return;
     }
 }
@@ -76,7 +79,27 @@ async function getTodo(url,request,response) {
         applicationMessage: "Success",
         todos:res
     }
-    todos = res
+    doResponse(response,200,RESPONSE_HEADER,responseBody)
+}
+
+async function deleteTodo(url,request,response) {
+    await dbDelete(MONGO_DB_COLLECTIONS.TODO,request.filter)
+    const responseBody = {
+        applicationStatusCode:"Success",
+        applicationMessage:"Success"
+    }
+    doResponse(response,200,RESPONSE_HEADER,responseBody)
+}
+
+async function updateTodo(url,request,response) {
+    const filter = request.filter
+    const obj = request.obj
+    const res = await dbUpdate(MONGO_DB_COLLECTIONS.TODO,filter,{$set:obj})
+    const responseBody = {
+        applicationStatusCode:"Success",
+        applicationMessage:"Success",
+        value:res
+    }
     doResponse(response,200,RESPONSE_HEADER,responseBody)
 }
 
@@ -90,11 +113,13 @@ async function dbGet(collection) {
     return res
 }
 
-async function dbUpdate(collection) {
-
+async function dbUpdate(collection,filter,obj) {
+    const res = await db.collection(collection).updateOne(filter,obj)
+    return res
 }
 
 async function dbDelete(collection,key) {
+    console.log(key)
     const res = await db.collection(collection).deleteOne(key)
     return res
 }
